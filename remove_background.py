@@ -57,16 +57,12 @@ def LoadImage(filename):
     image = cv2.imread(filename)
     return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # BGR에서 RGB로 변환
 
-# 메인 코드 실행
-if __name__ == "__main__":
+def remove_background(input_file: str, output_file: str):
     # 모델 로드
     detector = BodyDetector()
 
-    # 사용자로부터 입력 이미지 경로를 받음
-    img_fname = "input.png"
-    
     # 입력 이미지 읽기
-    img = LoadImage(img_fname)
+    img = LoadImage(input_file)
     img_pil = Image.fromarray(img)
 
     # 객체 탐지
@@ -75,7 +71,5 @@ if __name__ == "__main__":
     # 배경 교체 (투명 배경)
     res = ReplaceBG(img_pil, mask)
 
-    # 결과 이미지 저장
-    output_path = "output.png"
-    res.save(output_path)
-    print(f"결과 이미지가 '{output_path}'로 저장되었습니다.")
+    res.save(output_file)
+    print(f"결과 이미지가 '{output_file}'로 저장되었습니다.")
